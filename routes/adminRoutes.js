@@ -17,11 +17,10 @@ router.post("/login", async (req, res) => {
     if (!isPasswordValid)
       return res.status(401).json({ message: "Invalid admin password" });
 
-    // If password is correct, check if the username already exists in the database
-    // The username can be anything, so we'll just save it
     let admin = await Admin.findOne({ username });
 
     if (!admin) {
+      console.log("Admin not found, creating a new one");
       // Create a new admin entry for this username
       admin = new Admin({ username });
       await admin.save();
@@ -38,6 +37,7 @@ router.post("/login", async (req, res) => {
 
     res.json({ token });
   } catch (error) {
+    console.log("Error during login:", error);
     res.status(500).json({ message: "Server error", error });
   }
 });
