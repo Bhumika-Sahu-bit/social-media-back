@@ -7,7 +7,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors(
+  app.use(cors({
+    origin: 'https://social-media-front-k7k2.onrender.com', // frontend ka URL
+  }));
+));
 app.use(bodyParser.json());
 
 mongoose
